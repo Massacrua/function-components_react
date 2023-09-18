@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import React from 'react';
 
 function FormularioCadastro() {
@@ -18,7 +19,7 @@ function FormularioCadastro() {
             <label>Novidades</label>
             <input type='checkbox'/>
 
-            <button type='submit'>Cadastrar</button>
+            <Button type='submit' variant="contained" color='primary'>Cadastrar</Button>
         </form>
     )
 }

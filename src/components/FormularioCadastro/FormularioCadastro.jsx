@@ -1,48 +1,74 @@
 import { Button, FormControlLabel, Switch, TextField } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 
-function FormularioCadastro() {
-    let nome = ""
+function FormularioCadastro({ onSubmit, validarCpf }) {
+
+    const [nome, setNome] = useState("")
+    const [sobrenome, setSobrenome] = useState("")
+    const [cpf, setCpf] = useState("")
+    const [promocoes, setPromocoes] = useState(true)
+    const [novidades, setNovidades] = useState(true)
+
+    const [erros, setErros] = useState({
+        cpf: {
+            valido: true,
+            texto: ""
+        }
+    })
 
     return (
         <form 
             onSubmit={event => {
-                event.preventDefault(); 
-                console.log(nome)
+                event.preventDefault()
+                onSubmit({nome, sobrenome, cpf, promocoes, novidades})
             }}
         >
             <TextField
-                onChange={event => nome = event.target.value}
+                value={nome}
+                onChange={event => setNome(event.target.value)}
                 id='nome'
                 label="Nome"
                 margin='normal'
                 fullWidth
             />
-
             <TextField
+                value={sobrenome}
+                onChange={event => setSobrenome(event.target.value)}
                 id='sobrenome'
                 label="Sobrenome"
                 margin='normal'
                 fullWidth
             />
-
             <TextField 
+                value={cpf}
+                onBlur={event => setErros({cpf: validarCpf(event.target.value)})}
+                onChange={event => setCpf(event.target.value)}
+                error={!erros.cpf.valido}
+                helperText={erros.cpf.texto}
                 id='cpf' 
                 label="CPF" 
                 margin='normal' 
                 fullWidth 
             />
-
             <FormControlLabel 
                 label="Promoções" 
-                control={<Switch name='promocoes' defaultChecked />} 
+                control={
+                    <Switch 
+                        name='promocoes' 
+                        checked={promocoes} 
+                        onChange={event => setPromocoes(event.target.checked)}
+                    />
+                } 
             />
-
-            <FormControlLabel 
+            <FormControlLabel    
                 label="Novidades" 
-                control={<Switch name='novidades' defaultChecked />} 
+                control={
+                    <Switch
+                        name='novidades'     
+                        checked={novidades}
+                        onChange={event => setNovidades(event.target.checked)}
+                    />} 
             />
-
             <Button 
                 type='submit' 
                 variant="contained" 

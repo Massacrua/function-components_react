@@ -28,6 +28,7 @@ function DadosPessoais({ onSubmit, validarCpf }) {
                 onChange={event => setNome(event.target.value)}
                 id='nome'
                 label="Nome"
+                required
                 margin='normal'
                 fullWidth
             />
@@ -36,6 +37,7 @@ function DadosPessoais({ onSubmit, validarCpf }) {
                 onChange={event => setSobrenome(event.target.value)}
                 id='sobrenome'
                 label="Sobrenome"
+                required
                 margin='normal'
                 fullWidth
             />
@@ -45,6 +47,7 @@ function DadosPessoais({ onSubmit, validarCpf }) {
                 onChange={event => setCpf(event.target.value)}
                 error={!erros.cpf.valido}
                 helperText={erros.cpf.texto}
+                required
                 id='cpf' 
                 label="CPF" 
                 margin='normal' 

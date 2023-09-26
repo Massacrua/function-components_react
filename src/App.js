@@ -17,7 +17,7 @@ class App extends Component {
 }
 
 function formOnSubmit(data) {
-  console.log(data)
+  console.log("cadastrado")
 }
 
 function validarCpf(cpf) {

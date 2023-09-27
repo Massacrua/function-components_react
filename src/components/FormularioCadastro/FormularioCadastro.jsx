@@ -13,8 +13,9 @@ function FormularioCadastro({ onSubmit, validarCpf }) {
         <DadosEntrega onSubmit={onSubmit}/>
     ]
 
-    function handleForm() {
+    function handleForm(data) {
         setEtapaAtual(etapaAtual + 1)
+        onSubmit(data)
     }
 
     return (

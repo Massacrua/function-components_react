@@ -1,7 +1,7 @@
 import { Button, TextField } from "@mui/material"
 import { useState } from "react"
 
-function DadosUsuario({ onSubmit }) {
+function DadosUsuario({ onSubmit, validations }) {
 
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")

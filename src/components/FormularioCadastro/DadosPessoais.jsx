@@ -1,7 +1,7 @@
 import { Button, FormControlLabel, Switch, TextField } from '@mui/material';
 import React, { useState } from 'react';
 
-function DadosPessoais({ onSubmit, validarCpf }) {
+function DadosPessoais({ onSubmit, validations }) {
 
     const [nome, setNome] = useState("")
     const [sobrenome, setSobrenome] = useState("")
@@ -15,6 +15,13 @@ function DadosPessoais({ onSubmit, validarCpf }) {
             texto: ""
         }
     })
+
+    function validarCampos(event) {
+        const {name, value} = event.target
+        const newState = {...erros}
+        newState[name] = validations[name](value)
+        setErros(newState)
+    }
 
     return (
         <form 
@@ -43,7 +50,8 @@ function DadosPessoais({ onSubmit, validarCpf }) {
             />
             <TextField 
                 value={cpf}
-                onBlur={event => setErros({cpf: validarCpf(event.target.value)})}
+                name="cpf"
+                onBlur={validarCampos}
                 onChange={event => setCpf(event.target.value)}
                 error={!erros.cpf.valido}
                 helperText={erros.cpf.texto}

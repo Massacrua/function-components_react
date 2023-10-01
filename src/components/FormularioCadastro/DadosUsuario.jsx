@@ -1,19 +1,26 @@
 import { Button, TextField } from "@mui/material"
-import { useState } from "react"
+import { useContext, useState } from "react"
+import ValidacoesCadastro from "../../contexts/ValidacoesCadastro"
+import useErros from "../../hooks/useErros"
 
-function DadosUsuario({ onSubmit, validations }) {
+function DadosUsuario({ onSubmit }) {
 
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
 
+    const validations = useContext(ValidacoesCadastro)
+    const [erros, validarCampos, formReady] = useErros(validations)
+
     return (
-        <form 
+        <form
             onSubmit={event => {
                 event.preventDefault()
-                onSubmit({email, senha})
-        }}>
+                if (formReady())
+                    onSubmit({ email, senha })
+            }}>
             <TextField
                 value={email}
+                name="email"
                 onChange={event => setEmail(event.target.value)}
                 id="email"
                 label="Email"
@@ -24,7 +31,11 @@ function DadosUsuario({ onSubmit, validations }) {
             />
             <TextField
                 value={senha}
-                onChange={event => setSenha(event.target.value)}
+                name="senha"
+                onChange={event => event.target.value.length <= 72 && setSenha(event.target.value)}
+                onBlur={validarCampos}
+                error={!erros.senha.valido}
+                helperText={erros.senha.texto}
                 id="senha"
                 label="Senha"
                 type="password"
